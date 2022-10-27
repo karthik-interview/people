@@ -12,11 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.zoho.core.ui.component.Screen
-import com.zoho.people.data.UserUi
+import com.zoho.people.models.presentation.UserEntity
 
 @Composable
 fun HomeScreen(
-    users: List<UserUi>
+    users: List<UserEntity>
 ) {
 
     Screen(modifier = Modifier.fillMaxSize()) {

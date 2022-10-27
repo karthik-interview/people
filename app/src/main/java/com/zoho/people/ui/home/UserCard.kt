@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.zoho.core.ui.theme.PeopleTheme
-import com.zoho.people.data.UserUi
+import com.zoho.people.models.presentation.UserEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserCard(
-    user: UserUi,
-    onClick: (UserUi) -> Unit,
+    user: UserEntity,
+    onClick: (UserEntity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -48,7 +48,7 @@ fun UserCard(
 
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(user.profileUri)
+                    .data(user.profileThumbnailUri)
                     .crossfade(true)
                     .build()
             )
@@ -63,7 +63,7 @@ fun UserCard(
 
             Column {
                 Text(
-                    text = user.name,
+                    text = "${user.firstName} ${user.lastName}",
                     style = MaterialTheme.typography.titleLarge,
                 )
                 Text(
@@ -83,7 +83,13 @@ private fun PreviewUserCard() {
     PeopleTheme {
         Column {
             UserCard(
-                user = UserUi("John Doe", "https://picsum.photos/200", "john.doe@somecompany.com"),
+                user = UserEntity(
+                    firstName = "John",
+                    lastName = "Doe",
+                    email = "https://picsum.photos/200",
+                    profileUri = "john.doe@somecompany.com",
+                    profileThumbnailUri = ""
+                ),
                 onClick = {},
                 modifier = Modifier.fillMaxWidth()
             )

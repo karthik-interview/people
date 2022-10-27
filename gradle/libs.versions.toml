@@ -9,3 +9,4 @@ coil-compose = "io.coil-kt:coil-compose:2.2.2"
 compose-material3 = "androidx.compose.material3:material3:1.1.0-alpha01"
 compose-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+gson = "com.google.code.gson:gson:2.10"
