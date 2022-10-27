@@ -3,41 +3,18 @@ package com.zoho.people
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.zoho.core.ui.theme.PeopleTheme
+import com.zoho.people.data.UserUi
+import com.zoho.people.ui.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
+
+    private val users: List<UserUi> =
+        List(25) { UserUi("John Doe $it", profileUri = "https://picsum.photos/200") }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PeopleTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+            HomeScreen(users)
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    PeopleTheme {
-        Greeting("Android")
     }
 }
