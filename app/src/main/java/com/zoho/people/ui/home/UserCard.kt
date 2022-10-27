@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,10 +61,17 @@ fun UserCard(
                     .clip(CircleShape)
             )
 
-            Text(
-                text = user.name,
-                style = MaterialTheme.typography.titleLarge,
-            )
+            Column {
+                Text(
+                    text = user.name,
+                    style = MaterialTheme.typography.titleLarge,
+                )
+                Text(
+                    text = user.email,
+                    style = MaterialTheme.typography.titleSmall,
+                    modifier = Modifier.alpha(.5f)
+                )
+            }
         }
     }
 }
@@ -75,7 +83,7 @@ private fun PreviewUserCard() {
     PeopleTheme {
         Column {
             UserCard(
-                user = UserUi("John Doe", "https://picsum.photos/200"),
+                user = UserUi("John Doe", "https://picsum.photos/200", "john.doe@somecompany.com"),
                 onClick = {},
                 modifier = Modifier.fillMaxWidth()
             )

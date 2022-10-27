@@ -9,7 +9,7 @@ import com.zoho.people.ui.home.HomeScreen
 class MainActivity : ComponentActivity() {
 
     private val users: List<UserUi> =
-        List(25) { UserUi("John Doe $it", profileUri = "https://picsum.photos/200") }
+        List(25) { UserUi("John Doe $it", profileUri = "https://picsum.photos/200", email = "john.doe@somecompany.com") }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
