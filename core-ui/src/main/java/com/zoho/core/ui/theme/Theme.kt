@@ -1,4 +1,4 @@
-package com.zoho.people.ui.theme
+package com.zoho.core.ui.theme
 
 import android.app.Activity
 import android.os.Build
