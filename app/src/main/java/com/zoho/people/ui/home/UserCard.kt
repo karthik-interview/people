@@ -69,7 +69,7 @@ fun UserCard(
                 Text(
                     text = user.email,
                     style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.alpha(.5f)
+                    modifier = Modifier.alpha(.5f).padding(top = 4.dp, bottom = 4.dp)
                 )
             }
         }

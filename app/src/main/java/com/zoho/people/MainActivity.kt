@@ -3,25 +3,20 @@ package com.zoho.people
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.zoho.people.models.presentation.UserEntity
+import androidx.activity.viewModels
 import com.zoho.people.ui.home.HomeScreen
+import com.zoho.people.ui.home.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val users: List<UserEntity> = List(25) {
-        UserEntity(
-            firstName = "John",
-            lastName = "Doe",
-            profileUri = "https://picsum.photos/200",
-            email = "john.doe@somecompany.com",
-            profileThumbnailUri = "https://picsum.photos/200"
-        )
-    }
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeScreen(users)
+            HomeScreen(viewModel.state.value)
         }
     }
 }

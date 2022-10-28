@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.zoho.core.ui'
+    namespace 'com.zoho.people.data'
     compileSdk 33
 
     defaultConfig {
@@ -28,21 +28,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.3.0'
-    }
-
 }
 
 dependencies {
-    implementation libs.androidx.core
-
-    api libs.compose.ui
-    api libs.compose.tooling.preview
-    api libs.compose.material3
-    api libs.coil.compose
-    api libs.accompanist.placeholder
+    implementation project(":models")
+    implementation libs.retrofit.core
+    implementation libs.retrofit.gsonConverter
+    implementation libs.okhttp.logging
 }
