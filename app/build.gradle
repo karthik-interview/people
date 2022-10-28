@@ -59,6 +59,7 @@ dependencies {
     implementation libs.compose.ui
     implementation libs.compose.tooling.preview
     implementation libs.compose.material3
+    implementation libs.material.icons
 
     implementation libs.paging.compose
     implementation libs.paging.runtime

@@ -7,7 +7,6 @@ import com.zoho.people.models.data.RemoteUserEntity
 import com.zoho.people.models.mapper.UserMapper
 import com.zoho.people.models.presentation.UserEntity
 
-
 class UserRepository(
     private val userService: UserService,
     private val userMapper: UserMapper,
@@ -23,11 +22,22 @@ class UserRepository(
     private suspend fun saveUsersToLocal(users: List<RemoteUserEntity>) {
         val localMapping = users.map {
             LocalUserEntity(
-                it.email,
-                it.name.first,
-                it.name.last,
-                it.picture.large,
-                it.picture.thumbnail
+                email = it.email,
+                first = it.name.first,
+                last = it.name.last,
+                profileUri = it.picture.large,
+                profileThumbnailUri = it.picture.thumbnail,
+                phone = it.phone,
+                dob = it.dob.date,
+                age = it.dob.age,
+                streetName = it.location.street.name,
+                streetNo = it.location.street.number,
+                city = it.location.city,
+                state = it.location.state,
+                country = it.location.country,
+                postcode = it.location.postcode,
+                latitude = it.location.coordinates.latitude,
+                longitude = it.location.coordinates.longitude,
             )
         }
         userDao.insertAll(*localMapping.toTypedArray())
@@ -37,11 +47,20 @@ class UserRepository(
         // TODO Handle user not found case
         val user = userDao.findById(id)
         return UserEntity(
-            user.first,
-            user.last,
-            user.email,
-            user.profileUri,
-            user.profileThumbnailUri
+            firstName = user.first,
+            lastName = user.last,
+            email = user.email,
+            profileUri = user.profileUri,
+            profileThumbnailUri = user.profileThumbnailUri,
+            phone = user.phone,
+            dob = user.dob,
+            age = user.age,
+            streetName = user.streetName,
+            streetNo = user.streetNo,
+            city = user.city,
+            state = user.state,
+            country = user.country,
+            postcode = user.postcode,
         )
     }
 }

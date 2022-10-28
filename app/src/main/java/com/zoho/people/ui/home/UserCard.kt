@@ -18,11 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.zoho.core.ui.theme.PeopleTheme
 import com.zoho.people.models.presentation.UserEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,27 +70,6 @@ fun UserCard(
                     modifier = Modifier.alpha(.5f).padding(top = 4.dp, bottom = 4.dp)
                 )
             }
-        }
-    }
-}
-
-
-@Preview
-@Composable
-private fun PreviewUserCard() {
-    PeopleTheme {
-        Column {
-            UserCard(
-                user = UserEntity(
-                    firstName = "John",
-                    lastName = "Doe",
-                    email = "https://picsum.photos/200",
-                    profileUri = "john.doe@somecompany.com",
-                    profileThumbnailUri = ""
-                ),
-                onClick = {},
-                modifier = Modifier.fillMaxWidth()
-            )
         }
     }
 }

@@ -33,7 +33,10 @@ fun AppNavHost(
             Destination.Detail.route,
             arguments = listOf(navArgument(Destination.Detail.ArgId) { type = NavType.StringType })
         ) {
-            DetailRoute()
+            DetailRoute(
+                navController = navHostController
+
+            )
         }
     }
 }

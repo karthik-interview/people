@@ -1,21 +1,19 @@
 package com.zoho.people.ui.detail
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.zoho.core.ui.component.Screen
+import androidx.navigation.NavHostController
 import com.zoho.people.presentation.detail.DetailViewModel
 
 @Composable
 fun DetailRoute(
-    detailVm: DetailViewModel = hiltViewModel()
+    detailVm: DetailViewModel = hiltViewModel(),
+    navController: NavHostController
 ) {
-    Screen(modifier = Modifier.fillMaxSize()) {
-        Column {
-            Text(text = detailVm.userId.value)
-        }
-    }
+    DetailScreen(
+        onClickBack = { navController.popBackStack() },
+        modifier = Modifier.fillMaxWidth()
+    )
 }
