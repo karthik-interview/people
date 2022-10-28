@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.zoho.people.presentation.home.HomeViewModel
 import com.zoho.people.ui.home.HomeScreen
-import com.zoho.people.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,7 +17,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HomeScreen(viewModel.state.value)
+            val paging = viewModel.usersPaging.collectAsLazyPagingItems()
+
+            HomeScreen(paging)
         }
     }
 }

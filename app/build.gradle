@@ -63,4 +63,7 @@ dependencies {
     implementation libs.retrofit.core
     implementation libs.retrofit.gsonConverter
     implementation libs.okhttp.logging
+
+    implementation libs.paging.compose
+    implementation libs.paging.runtime
 }
