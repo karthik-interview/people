@@ -13,6 +13,7 @@ fun DetailRoute(
     navController: NavHostController
 ) {
     DetailScreen(
+        state = detailVm.state.value,
         onClickBack = { navController.popBackStack() },
         modifier = Modifier.fillMaxWidth()
     )

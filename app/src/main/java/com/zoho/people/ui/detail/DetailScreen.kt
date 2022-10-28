@@ -32,77 +32,104 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.zoho.core.ui.component.PlaceholderDefaults
 import com.zoho.core.ui.component.Screen
+import com.zoho.core.ui.component.placeholder
+import com.zoho.people.models.presentation.UserEntity
+import com.zoho.people.presentation.detail.DetailState
 
 @Composable
 fun DetailScreen(
+    state: DetailState,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Screen(modifier = modifier) {
-        Column(
-            modifier = Modifier
-                .padding(top = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-
-            IconButton(
-                onClick = onClickBack,
-                modifier = Modifier.align(Alignment.Start)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            val painter = rememberAsyncImagePainter(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://picsum.photos/800")
-                    .crossfade(true)
-                    .build()
-            )
-
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(140.dp)
-                    .clip(CircleShape)
-            )
-
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(
-                    text = "Jane Cooper",
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-                Text(
-                    text = "London, England",
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-            }
-
-            Divider(color = DividerDefaults.color.copy(alpha = .5f))
-
-            ContactInfo(
+        when (state) {
+            DetailState.Loading -> Text(text = "Loading") // TODO Update the flow
+            is DetailState.UserDetailFound -> DetailUi(
+                onClickBack = onClickBack,
+                userEntity = state.userEntity,
                 modifier = Modifier.fillMaxWidth()
             )
-
-            AboutInfo(Modifier.fillMaxWidth())
         }
     }
 }
 
 @Composable
+private fun DetailUi(
+    onClickBack: () -> Unit,
+    userEntity: UserEntity,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .padding(top = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+
+        IconButton(
+            onClick = onClickBack,
+            modifier = Modifier.align(Alignment.Start)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        val painter = rememberAsyncImagePainter(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(userEntity.profileUri)
+                .crossfade(true)
+                .build()
+        )
+
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier
+                .size(140.dp)
+                .clip(CircleShape)
+                .placeholder(PlaceholderDefaults.fadingPlaceholder(visible = painter.state is AsyncImagePainter.State.Loading))
+        )
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
+            Text(
+                text = "${userEntity.firstName} ${userEntity.lastName}",
+                style = MaterialTheme.typography.headlineMedium,
+            )
+            Text(
+                text = "${userEntity.state}, ${userEntity.country}",
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
+
+        Divider(color = DividerDefaults.color.copy(alpha = .5f))
+
+        ContactInfo(
+            phone = userEntity.phone,
+            email = userEntity.email,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        AboutInfo(Modifier.fillMaxWidth())
+    }
+}
+
+@Composable
 fun ContactInfo(
+    phone: String,
+    email: String,
     modifier: Modifier = Modifier,
 ) {
     InfoCard(
@@ -111,7 +138,7 @@ fun ContactInfo(
     ) {
         InfoItem(
             icon = Icons.Default.Phone,
-            value = "+91 73584 14344",
+            value = phone,
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { }
@@ -119,7 +146,7 @@ fun ContactInfo(
 
         InfoItem(
             icon = Icons.Default.Email,
-            value = "john.doe@google.com",
+            value = email,
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { }
