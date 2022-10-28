@@ -3,9 +3,11 @@ package com.zoho.people.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.zoho.people.ui.detail.DetailRoute
 import com.zoho.people.ui.home.HomeRoute
 
@@ -27,7 +29,10 @@ fun AppNavHost(
             )
         }
 
-        composable(Destination.Detail.route) {
+        composable(
+            Destination.Detail.route,
+            arguments = listOf(navArgument(Destination.Detail.ArgId) { type = NavType.StringType })
+        ) {
             DetailRoute()
         }
     }

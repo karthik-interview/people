@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.zoho.people.navigation.Destination
+import com.zoho.people.navigation.navigateToDetail
 import com.zoho.people.presentation.home.HomeViewModel
 
 @Composable
@@ -16,6 +16,6 @@ fun HomeRoute(
 
     HomeScreen(
         pagingItems = pagingItems,
-        onClickUser = { navController.navigate(Destination.Detail.route) },
+        onClickUser = { navController.navigateToDetail(it.email) },
     )
 }
