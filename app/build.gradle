@@ -56,14 +56,19 @@ dependencies {
     implementation libs.androidx.core
     implementation libs.androidx.lifecycle.runtime
     implementation libs.activity.compose
+    implementation libs.compose.ui
+    implementation libs.compose.tooling.preview
+    implementation libs.compose.material3
 
-    implementation libs.hilt.android
-    kapt libs.hilt.compiler
+    implementation libs.paging.compose
+    implementation libs.paging.runtime
 
     implementation libs.retrofit.core
     implementation libs.retrofit.gsonConverter
     implementation libs.okhttp.logging
+    implementation libs.hilt.compose.navigation
+    implementation libs.compose.navigation
 
-    implementation libs.paging.compose
-    implementation libs.paging.runtime
+    implementation libs.hilt.android
+    kapt libs.hilt.compiler
 }

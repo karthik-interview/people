@@ -14,19 +14,20 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import com.zoho.core.ui.component.LazyColumnListing
 import com.zoho.core.ui.component.Screen
 import com.zoho.people.models.presentation.UserEntity
 
 @Composable
 fun HomeScreen(
     pagingItems: LazyPagingItems<UserEntity>,
+    onClickUser: (UserEntity) -> Unit,
 ) {
 
     Screen(modifier = Modifier.fillMaxSize()) {
         HomeScreenListing(
             users = pagingItems,
-            Modifier.fillMaxWidth()
+            onClickUser = onClickUser,
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -34,19 +35,20 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenListing(
     users: LazyPagingItems<UserEntity>,
+    onClickUser: (UserEntity) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item { Spacer(modifier = Modifier.size(12.dp)) }
 
         items(users) {
-            it?.let {
+            it?.let { user ->
                 UserCard(
-                    user = it,
-                    onClick = {},
+                    user = user,
+                    onClick = { onClickUser(user) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
@@ -60,25 +62,6 @@ private fun HomeScreenListing(
         }
 
         item { Spacer(modifier = Modifier.size(12.dp)) }
-    }
-}
-
-@Composable
-private fun HomeScreenLoading(
-    modifier: Modifier = Modifier
-) {
-
-    LazyColumnListing(
-        modifier = modifier,
-        userScrollEnabled = false,
-    ) {
-        items(15) {
-            UserCardPlaceholder(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-            )
-        }
     }
 }
 
