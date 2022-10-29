@@ -1,4 +1,4 @@
-package com.zoho.people.models.data
+package com.zoho.people.data.remote
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

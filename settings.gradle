@@ -15,5 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "People"
 include ':app'
 include ':core-ui'
-include ':models'
 include ':data'
+include ':domain'

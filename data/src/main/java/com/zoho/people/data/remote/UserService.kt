@@ -1,7 +1,6 @@
 package com.zoho.people.data.remote
 
 import com.zoho.people.data.common.ResponseItems
-import com.zoho.people.models.data.RemoteUserEntity
 import retrofit2.http.GET
 import retrofit2.http.Query
 

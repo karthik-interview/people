@@ -40,19 +40,20 @@ import coil.request.ImageRequest
 import com.zoho.core.ui.component.PlaceholderDefaults
 import com.zoho.core.ui.component.Screen
 import com.zoho.core.ui.component.placeholder
-import com.zoho.people.models.presentation.UserEntity
-import com.zoho.people.presentation.detail.DetailState
+import com.zoho.people.presentation.detail.DetailUiState
+import dev.thedukerchip.domain.models.UserEntity
 
 @Composable
 fun DetailScreen(
-    state: DetailState,
+    state: DetailUiState,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Screen(modifier = modifier) {
         when (state) {
-            DetailState.Loading -> Text(text = "Loading") // TODO Update the flow
-            is DetailState.UserDetailFound -> DetailUi(
+            DetailUiState.Loading -> Text(text = "Loading") // TODO Update the flow
+            DetailUiState.UserNotFound -> Text(text = "UserNotFound") // TODO Update the flow
+            is DetailUiState.UserDetailFoundUi -> DetailUi(
                 onClickBack = onClickBack,
                 userEntity = state.userEntity,
                 modifier = Modifier.fillMaxWidth()

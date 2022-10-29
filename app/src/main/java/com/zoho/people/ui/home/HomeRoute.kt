@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.zoho.people.navigation.navigateToDetail
+import com.zoho.people.ui.navigation.navigateToDetail
 import com.zoho.people.presentation.home.HomeViewModel
 
 @Composable

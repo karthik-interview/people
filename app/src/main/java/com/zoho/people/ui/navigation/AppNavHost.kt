@@ -1,4 +1,4 @@
-package com.zoho.people.navigation
+package com.zoho.people.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,7 +35,6 @@ fun AppNavHost(
         ) {
             DetailRoute(
                 navController = navHostController
-
             )
         }
     }

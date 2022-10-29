@@ -1,4 +1,4 @@
-package com.zoho.people.models.presentation
+package dev.thedukerchip.domain.models
 
 data class UserEntity(
     val firstName: String,
@@ -15,4 +15,6 @@ data class UserEntity(
     val state: String,
     val country: String,
     val postcode: String,
+    val latitude: String,
+    val longitude: String,
 )

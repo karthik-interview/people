@@ -2,8 +2,8 @@ package com.zoho.people.presentation.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.zoho.people.data.UserRepository
-import com.zoho.people.models.presentation.UserEntity
+import dev.thedukerchip.domain.GetUserListUseCase
+import dev.thedukerchip.domain.models.UserEntity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,12 +12,12 @@ const val PAGE_SIZE = 25
 
 @Singleton
 class UserPagingSource @Inject constructor(
-    private val userRepository: UserRepository,
+    private val getUserListUseCase: GetUserListUseCase,
 ) : PagingSource<Int, UserEntity>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserEntity> {
         return try {
             val nextPage = params.key ?: PAGING_START_INDEX
-            val users = userRepository.getUsers(nextPage)
+            val users = getUserListUseCase(nextPage)
 
             LoadResult.Page(
                 data = users,

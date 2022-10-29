@@ -15,7 +15,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.zoho.core.ui.component.Screen
-import com.zoho.people.models.presentation.UserEntity
+import dev.thedukerchip.domain.models.UserEntity
 
 @Composable
 fun HomeScreen(

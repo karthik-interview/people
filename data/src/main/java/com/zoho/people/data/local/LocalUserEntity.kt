@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "users")
 class LocalUserEntity(
     @PrimaryKey val email: String,
-    val first: String,
-    val last: String,
+    val firstName: String,
+    val lastName: String,
     val profileUri: String,
     val profileThumbnailUri: String,
     val phone: String,

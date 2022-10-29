@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.zoho.people.models.presentation.UserEntity
+import dev.thedukerchip.domain.models.UserEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

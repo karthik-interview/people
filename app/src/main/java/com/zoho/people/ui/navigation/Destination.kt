@@ -1,4 +1,4 @@
-package com.zoho.people.navigation
+package com.zoho.people.ui.navigation
 
 import androidx.navigation.NavController
 
