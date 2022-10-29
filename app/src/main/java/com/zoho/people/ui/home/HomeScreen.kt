@@ -8,15 +8,31 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.zoho.core.ui.component.Screen
+import com.zoho.people.R
 import dev.thedukerchip.domain.models.UserEntity
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     pagingItems: LazyPagingItems<UserEntity>,
@@ -24,12 +40,50 @@ fun HomeScreen(
 ) {
 
     Screen(modifier = Modifier.fillMaxSize()) {
-        HomeScreenListing(
-            users = pagingItems,
-            onClickUser = onClickUser,
-            modifier = Modifier.fillMaxWidth(),
-        )
+        val appBarState = rememberTopAppBarState()
+        val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(appBarState)
+        Scaffold(
+            topBar = {
+                HomeTopAppBar(
+                    scrollBehavior = scrollBehavior,
+                    onSearchClick = { /* TODO */ }
+                )
+            },
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+        ) {
+            HomeScreenListing(
+                users = pagingItems,
+                onClickUser = onClickUser,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(it),
+            )
+        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeTopAppBar(
+    onSearchClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+) {
+    TopAppBar(
+        title = { Text(text = stringResource(id = R.string.app_name)) },
+        scrollBehavior = scrollBehavior,
+        actions = {
+            IconButton(onClick = onSearchClick) {
+                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+            }
+        },
+        colors = TopAppBarDefaults.smallTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+        ),
+        modifier = modifier,
+    )
 }
 
 @Composable

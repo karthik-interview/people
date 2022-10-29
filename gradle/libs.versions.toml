@@ -6,6 +6,8 @@ room = "2.4.3"
 
 [libraries]
 accompanist-placeholder = "com.google.accompanist:accompanist-placeholder-material:0.27.0"
+accompanist-systemuicontroller = "com.google.accompanist:accompanist-systemuicontroller:0.27.0"
+
 activity-compose = "androidx.activity:activity-compose:1.6.1"
 androidx-core = "androidx.core:core-ktx:1.9.0"
 androidx-lifecycle-runtime = "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
