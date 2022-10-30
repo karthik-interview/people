@@ -53,30 +53,27 @@ dependencies {
     implementation project(":data")
     implementation project(":domain")
 
-    implementation libs.androidx.core
-    implementation libs.androidx.lifecycle.runtime
-    implementation libs.activity.compose
-    implementation libs.compose.ui
-    implementation libs.compose.tooling.preview
-    implementation libs.compose.material.core
-    implementation libs.compose.material.icons
-
-    implementation libs.paging.compose
-    implementation libs.paging.runtime
-
-    implementation libs.retrofit.core
-    implementation libs.retrofit.gsonConverter
-    implementation libs.okhttp.logging
-    implementation libs.hilt.compose.navigation
-    implementation libs.compose.navigation
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.windowManager
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.compose.material.iconsExtended
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.material3.windowSizeClass
+    implementation libs.androidx.paging.compose
+    implementation libs.androidx.paging.runtime
+    implementation libs.androidx.room.ktx
+    implementation libs.androidx.room.runtime
+    kapt libs.androidx.room.compiler
 
     implementation libs.hilt.android
     kapt libs.hilt.compiler
 
-    implementation libs.room.ktx
-    implementation libs.room.runtime
-    kapt libs.room.compiler
-
-    implementation("androidx.compose.material3:material3-window-size-class:1.1.0-alpha01")
-    implementation("androidx.window:window:1.1.0-alpha03")
+    implementation libs.retrofit.core
+    implementation libs.retrofit.gsonConverter
+    implementation libs.okhttp.logging
+    implementation libs.androidx.hilt.navigation.compose
+    implementation libs.androidx.compose.navigation
 }

@@ -33,10 +33,12 @@ android {
 
 dependencies {
     implementation project(":domain")
+
+    implementation libs.androidx.room.ktx
+    implementation libs.androidx.room.runtime
+    kapt libs.androidx.room.compiler
+
     implementation libs.retrofit.core
     implementation libs.retrofit.gsonConverter
     implementation libs.okhttp.logging
-    implementation libs.room.ktx
-    implementation libs.room.runtime
-    kapt libs.room.compiler
 }

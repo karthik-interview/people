@@ -38,12 +38,13 @@ android {
 }
 
 dependencies {
-    implementation libs.androidx.core
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.compose.material3
 
-    api libs.compose.ui
-    api libs.compose.tooling.preview
-    api libs.compose.material3
-    api libs.coil.compose
-    api libs.accompanist.placeholder
     implementation libs.accompanist.systemuicontroller
+
+    api libs.accompanist.placeholder
+    api libs.coil.kt.compose
 }
