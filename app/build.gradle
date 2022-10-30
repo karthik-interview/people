@@ -58,8 +58,8 @@ dependencies {
     implementation libs.activity.compose
     implementation libs.compose.ui
     implementation libs.compose.tooling.preview
-    implementation libs.compose.material3
-    implementation libs.material.icons
+    implementation libs.compose.material.core
+    implementation libs.compose.material.icons
 
     implementation libs.paging.compose
     implementation libs.paging.runtime
@@ -76,4 +76,7 @@ dependencies {
     implementation libs.room.ktx
     implementation libs.room.runtime
     kapt libs.room.compiler
+
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.0-alpha01")
+    implementation("androidx.window:window:1.1.0-alpha03")
 }

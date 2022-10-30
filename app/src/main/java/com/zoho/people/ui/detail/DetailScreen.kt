@@ -1,5 +1,6 @@
 package com.zoho.people.ui.detail
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -7,9 +8,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,6 +29,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,12 +40,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.zoho.core.ui.component.PlaceholderDefaults
 import com.zoho.core.ui.component.Screen
-import com.zoho.core.ui.component.placeholder
 import com.zoho.people.presentation.detail.DetailUiState
 import dev.thedukerchip.domain.models.UserEntity
 
@@ -53,17 +56,35 @@ fun DetailScreen(
         when (state) {
             DetailUiState.Loading -> Text(text = "Loading") // TODO Update the flow
             DetailUiState.UserNotFound -> Text(text = "UserNotFound") // TODO Update the flow
-            is DetailUiState.UserDetailFoundUi -> DetailUi(
-                onClickBack = onClickBack,
-                userEntity = state.userEntity,
-                modifier = Modifier.fillMaxWidth()
-            )
+            is DetailUiState.UserDetailFoundUi -> {
+                DetailUi(
+                    onClickBack = onClickBack,
+                    userEntity = state.userEntity,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 private fun DetailUi(
+    onClickBack: () -> Unit,
+    userEntity: UserEntity,
+    modifier: Modifier = Modifier,
+) {
+    val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
+    if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
+        DetailExpandedUi(onClickBack = onClickBack, userEntity = userEntity, modifier = modifier)
+    } else {
+        DetailCompactUi(onClickBack = onClickBack, userEntity = userEntity, modifier = modifier)
+    }
+}
+
+
+@Composable
+private fun DetailCompactUi(
     onClickBack: () -> Unit,
     userEntity: UserEntity,
     modifier: Modifier = Modifier,
@@ -77,47 +98,19 @@ private fun DetailUi(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        IconButton(
-            onClick = onClickBack,
+        BackNavigationIconButton(
+            onClickBack = onClickBack,
             modifier = Modifier.align(Alignment.Start)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
-            )
-        }
-
-        val painter = rememberAsyncImagePainter(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(userEntity.profileUri)
-                .crossfade(true)
-                .build()
         )
 
-        Image(
-            painter = painter,
-            contentDescription = null,
+        ProfileImage(
+            uri = userEntity.profileUri,
             modifier = Modifier
                 .size(140.dp)
                 .clip(CircleShape)
-                .placeholder(PlaceholderDefaults.fadingPlaceholder(visible = painter.state is AsyncImagePainter.State.Loading))
         )
 
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(
-                text = "${userEntity.firstName} ${userEntity.lastName}",
-                style = MaterialTheme.typography.headlineMedium,
-            )
-            Text(
-                text = "${userEntity.state}, ${userEntity.country}",
-                style = MaterialTheme.typography.bodyMedium,
-            )
-        }
+        ProfileMiniInfo(userEntity = userEntity, modifier = Modifier.fillMaxWidth())
 
         Divider(color = DividerDefaults.color.copy(alpha = .5f))
 
@@ -129,6 +122,131 @@ private fun DetailUi(
 
         AboutInfo(Modifier.fillMaxWidth())
     }
+}
+
+@Composable
+private fun DetailExpandedUi(
+    onClickBack: () -> Unit,
+    userEntity: UserEntity,
+    modifier: Modifier = Modifier,
+) {
+
+    Row(
+        modifier = modifier
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(.4f),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            BackNavigationIconButton(
+                onClickBack = onClickBack,
+                modifier = Modifier.align(Alignment.Start)
+            )
+
+            ProfileImage(
+                uri = userEntity.profileUri,
+                modifier = Modifier
+                    .size(140.dp)
+                    .clip(CircleShape)
+            )
+
+            ProfileMiniInfo(userEntity = userEntity, modifier = Modifier.fillMaxWidth())
+        }
+
+        Divider(
+            color = DividerDefaults.color.copy(alpha = .5f),
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(vertical = 4.dp)
+                .width(1.dp)
+        )
+
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .padding(top = 12.dp)
+                .weight(1f),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+
+
+            ContactInfo(
+                phone = userEntity.phone,
+                email = userEntity.email,
+                modifier = Modifier.fillMaxWidth()
+            )
+            ContactInfo(
+                phone = userEntity.phone,
+                email = userEntity.email,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            AboutInfo(Modifier.fillMaxWidth())
+        }
+    }
+
+}
+
+@Composable
+fun ProfileImage(
+    uri: String,
+    modifier: Modifier = Modifier
+) {
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(uri)
+            .crossfade(true)
+            .build()
+    )
+
+    Image(
+        painter = painter,
+        contentDescription = null,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun BackNavigationIconButton(
+    onClickBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    IconButton(
+        onClick = onClickBack,
+        modifier = modifier
+    ) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary
+        )
+    }
+
+}
+
+@Composable
+fun ProfileMiniInfo(
+    userEntity: UserEntity,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Text(
+            text = "${userEntity.firstName} ${userEntity.lastName}",
+            style = MaterialTheme.typography.headlineMedium,
+        )
+        Text(
+            text = "${userEntity.state}, ${userEntity.country}",
+            style = MaterialTheme.typography.bodyMedium,
+        )
+    }
+
 }
 
 @Composable
