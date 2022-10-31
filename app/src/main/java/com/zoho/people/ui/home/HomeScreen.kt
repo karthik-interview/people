@@ -30,13 +30,13 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.zoho.core.ui.component.Screen
 import com.zoho.people.R
-import dev.thedukerchip.domain.models.UserEntity
+import com.zoho.people.core.model.data.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    pagingItems: LazyPagingItems<UserEntity>,
-    onClickUser: (UserEntity) -> Unit,
+    pagingItems: LazyPagingItems<User>,
+    onClickUser: (User) -> Unit,
 ) {
 
     Screen(modifier = Modifier.fillMaxSize()) {
@@ -88,8 +88,8 @@ fun HomeTopAppBar(
 
 @Composable
 private fun HomeScreenListing(
-    users: LazyPagingItems<UserEntity>,
-    onClickUser: (UserEntity) -> Unit,
+    users: LazyPagingItems<User>,
+    onClickUser: (User) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(

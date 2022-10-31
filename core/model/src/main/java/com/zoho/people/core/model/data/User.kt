@@ -1,6 +1,9 @@
-package dev.thedukerchip.domain.models
+package com.zoho.people.core.model.data
 
-data class UserEntity(
+/**
+ * Representation of an User
+ */
+data class User(
     val firstName: String,
     val lastName: String,
     val email: String,

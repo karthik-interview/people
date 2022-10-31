@@ -21,13 +21,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import dev.thedukerchip.domain.models.UserEntity
+import com.zoho.people.core.model.data.User
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserCard(
-    user: UserEntity,
-    onClick: (UserEntity) -> Unit,
+    user: User,
+    onClick: (User) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 

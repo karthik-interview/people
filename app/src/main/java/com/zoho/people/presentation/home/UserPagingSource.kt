@@ -2,8 +2,8 @@ package com.zoho.people.presentation.home
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import dev.thedukerchip.domain.GetUserListUseCase
-import dev.thedukerchip.domain.models.UserEntity
+import com.zoho.people.core.model.data.User
+import dev.thedukerchip.domain.usecase.GetUserListUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,8 +13,8 @@ const val PAGE_SIZE = 25
 @Singleton
 class UserPagingSource @Inject constructor(
     private val getUserListUseCase: GetUserListUseCase,
-) : PagingSource<Int, UserEntity>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UserEntity> {
+) : PagingSource<Int, User>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
         return try {
             val nextPage = params.key ?: PAGING_START_INDEX
             val users = getUserListUseCase(nextPage)
@@ -29,7 +29,7 @@ class UserPagingSource @Inject constructor(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, UserEntity>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, User>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)

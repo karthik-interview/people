@@ -9,7 +9,7 @@ import com.zoho.people.presentation.detail.DetailUiState.UserDetailFoundUi
 import com.zoho.people.presentation.detail.DetailUiState.UserNotFound
 import com.zoho.people.ui.navigation.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.thedukerchip.domain.GetUserByIdUseCase
+import dev.thedukerchip.domain.usecase.GetUserByIdUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

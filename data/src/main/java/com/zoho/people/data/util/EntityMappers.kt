@@ -1,10 +1,10 @@
 package com.zoho.people.data.util
 
+import com.zoho.people.core.model.data.User
 import com.zoho.people.data.local.LocalUserEntity
 import com.zoho.people.data.remote.RemoteUserEntity
-import dev.thedukerchip.domain.models.UserEntity
 
-fun UserEntity.toLocalUserEntity() = LocalUserEntity(
+fun User.toLocalUserEntity() = LocalUserEntity(
     email = email,
     firstName = firstName,
     lastName = lastName,
@@ -23,7 +23,7 @@ fun UserEntity.toLocalUserEntity() = LocalUserEntity(
     longitude = longitude,
 )
 
-fun LocalUserEntity.toUserEntity() = UserEntity(
+fun LocalUserEntity.toUserEntity() = User(
     email = email,
     firstName = firstName,
     lastName = lastName,
@@ -43,7 +43,7 @@ fun LocalUserEntity.toUserEntity() = UserEntity(
 )
 
 
-fun RemoteUserEntity.toDomainUserEntity() = UserEntity(
+fun RemoteUserEntity.toDomainUserEntity() = User(
     firstName = name.first,
     lastName = name.last,
     email = email,

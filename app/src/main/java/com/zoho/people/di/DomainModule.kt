@@ -7,10 +7,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.thedukerchip.domain.GetUserByIdUseCase
-import dev.thedukerchip.domain.GetUserListUseCase
-import dev.thedukerchip.domain.SaveUsersIntoDbUseCase
 import dev.thedukerchip.domain.repository.UserRepository
+import dev.thedukerchip.domain.usecase.GetUserByIdUseCase
+import dev.thedukerchip.domain.usecase.GetUserListUseCase
+import dev.thedukerchip.domain.usecase.SaveUsersIntoDbUseCase
 
 @Module
 @InstallIn(SingletonComponent::class)

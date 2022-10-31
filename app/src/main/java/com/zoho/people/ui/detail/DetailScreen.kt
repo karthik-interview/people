@@ -43,8 +43,8 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.zoho.core.ui.component.Screen
+import com.zoho.people.core.model.data.User
 import com.zoho.people.presentation.detail.DetailUiState
-import dev.thedukerchip.domain.models.UserEntity
 
 @Composable
 fun DetailScreen(
@@ -59,7 +59,7 @@ fun DetailScreen(
             is DetailUiState.UserDetailFoundUi -> {
                 DetailUi(
                     onClickBack = onClickBack,
-                    userEntity = state.userEntity,
+                    user = state.user,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -71,14 +71,14 @@ fun DetailScreen(
 @Composable
 private fun DetailUi(
     onClickBack: () -> Unit,
-    userEntity: UserEntity,
+    user: User,
     modifier: Modifier = Modifier,
 ) {
     val windowSizeClass = calculateWindowSizeClass(LocalContext.current as Activity)
     if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
-        DetailExpandedUi(onClickBack = onClickBack, userEntity = userEntity, modifier = modifier)
+        DetailExpandedUi(onClickBack = onClickBack, user = user, modifier = modifier)
     } else {
-        DetailCompactUi(onClickBack = onClickBack, userEntity = userEntity, modifier = modifier)
+        DetailCompactUi(onClickBack = onClickBack, user = user, modifier = modifier)
     }
 }
 
@@ -86,7 +86,7 @@ private fun DetailUi(
 @Composable
 private fun DetailCompactUi(
     onClickBack: () -> Unit,
-    userEntity: UserEntity,
+    user: User,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
@@ -104,19 +104,19 @@ private fun DetailCompactUi(
         )
 
         ProfileImage(
-            uri = userEntity.profileUri,
+            uri = user.profileUri,
             modifier = Modifier
                 .size(140.dp)
                 .clip(CircleShape)
         )
 
-        ProfileMiniInfo(userEntity = userEntity, modifier = Modifier.fillMaxWidth())
+        ProfileMiniInfo(user = user, modifier = Modifier.fillMaxWidth())
 
         Divider(color = DividerDefaults.color.copy(alpha = .5f))
 
         ContactInfo(
-            phone = userEntity.phone,
-            email = userEntity.email,
+            phone = user.phone,
+            email = user.email,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -127,7 +127,7 @@ private fun DetailCompactUi(
 @Composable
 private fun DetailExpandedUi(
     onClickBack: () -> Unit,
-    userEntity: UserEntity,
+    user: User,
     modifier: Modifier = Modifier,
 ) {
 
@@ -145,13 +145,13 @@ private fun DetailExpandedUi(
             )
 
             ProfileImage(
-                uri = userEntity.profileUri,
+                uri = user.profileUri,
                 modifier = Modifier
                     .size(140.dp)
                     .clip(CircleShape)
             )
 
-            ProfileMiniInfo(userEntity = userEntity, modifier = Modifier.fillMaxWidth())
+            ProfileMiniInfo(user = user, modifier = Modifier.fillMaxWidth())
         }
 
         Divider(
@@ -174,13 +174,13 @@ private fun DetailExpandedUi(
 
 
             ContactInfo(
-                phone = userEntity.phone,
-                email = userEntity.email,
+                phone = user.phone,
+                email = user.email,
                 modifier = Modifier.fillMaxWidth()
             )
             ContactInfo(
-                phone = userEntity.phone,
-                email = userEntity.email,
+                phone = user.phone,
+                email = user.email,
                 modifier = Modifier.fillMaxWidth()
             )
 
@@ -229,7 +229,7 @@ fun BackNavigationIconButton(
 
 @Composable
 fun ProfileMiniInfo(
-    userEntity: UserEntity,
+    user: User,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -238,11 +238,11 @@ fun ProfileMiniInfo(
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = "${userEntity.firstName} ${userEntity.lastName}",
+            text = "${user.firstName} ${user.lastName}",
             style = MaterialTheme.typography.headlineMedium,
         )
         Text(
-            text = "${userEntity.state}, ${userEntity.country}",
+            text = "${user.state}, ${user.country}",
             style = MaterialTheme.typography.bodyMedium,
         )
     }

@@ -1,13 +1,13 @@
 package dev.thedukerchip.domain.repository
 
-import dev.thedukerchip.domain.models.UserEntity
+import com.zoho.people.core.model.data.User
 
 interface UserRepository {
 
-    suspend fun getUsers(page: Int): List<UserEntity>
+    suspend fun getUsers(page: Int): List<User>
 
-    suspend fun saveUsersInLocalStorage(users: List<UserEntity>)
+    suspend fun saveUsersInLocalStorage(users: List<User>)
 
-    suspend fun getUserById(id: String): UserEntity?
+    suspend fun getUserById(id: String): User?
 
 }
